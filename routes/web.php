@@ -29,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
     Route::resource('products', ProductController::class);        
+        
+    Route::resource('suppliers', SupplierController::class);
 
     // --- ÁREA DO ADMINISTRADOR ---
     Route::middleware([\App\Http\Middleware\AdminMiddleware::class])->group(function () {
@@ -39,8 +41,7 @@ Route::middleware(['auth'])->group(function () {
         // Rota específica para o Reset de Senha (Esqueci minha senha via Admin)
         Route::patch('/users/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.reset');
         
-        // Seus outros cadastros administrativos (ex: Fornecedores)
-        Route::resource('suppliers', SupplierController::class);
+        
 
         //altera outros usuarios entre ativo e inativo, mas não pode alterar o status do proprio usuario
         Route::patch('/users/{user}/toggle', [UserController::class, 'toggleStatus'])->name('users.toggle');          

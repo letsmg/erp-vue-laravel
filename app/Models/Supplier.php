@@ -19,6 +19,8 @@ class Supplier extends Model
         'neighborhood',
         'city',
         'zip_code',
+        'state',
+        'email',
         'contact_name_1',
         'phone_1',
         'contact_name_2',

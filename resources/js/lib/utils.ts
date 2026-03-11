@@ -9,22 +9,28 @@ export function cn(...inputs: ClassValue[]) {
 export const fillFormData = (form: any, suppliers: any[] = []) => {
     if (!form) return;
 
+    const ufs = ['SP', 'RJ', 'MG', 'PR', 'SC', 'RS', 'BA', 'GO', 'CE', 'PE'];
+
     const fakeData: Record<string, any> = {
         // --- Usuários e Fornecedores ---
         name: () => "Usuário de Teste " + Math.floor(Math.random() * 100),
         company_name: () => "Empresa Teste " + Math.random().toString(36).substring(7).toUpperCase(),
         email: () => `teste_${Math.random().toString(36).substring(5)}@zenite.com`,        
         cnpj: () => {
-            const suffix = Math.floor(Math.random() * 9000) + 1000;
-            return `00.000.000/0001-${suffix.toString().substring(0, 2)}`;
+            const part1 = Math.floor(Math.random() * 90) + 10;
+            const part2 = Math.floor(Math.random() * 900) + 100;
+            return `${part1}.${part2}.000/0001-66`;
         },
         state_registration: () => "ISENTO",
         zip_code: () => "01001-000",
         address: () => "Rua de Teste, " + Math.floor(Math.random() * 999),
         neighborhood: () => "Bairro Industrial",
         city: () => "São Paulo",
+        state: () => ufs[Math.floor(Math.random() * ufs.length)], // Adicionado para o Combobox
         contact_name_1: () => "Contato Principal",
         phone_1: () => "(11) 98888-7777",
+        contact_name_2: () => "Contato Secundário", // Adicionado para evitar nulos
+        phone_2: () => "(11) 4002-8922",            // Adicionado para evitar nulos
         password: () => "Mudar@123",
         password_confirmation: () => "Mudar@123",
         access_level: () => 0,
@@ -52,7 +58,6 @@ export const fillFormData = (form: any, suppliers: any[] = []) => {
         meta_title: () => "Tênis Nike Air Max 2026 - Oferta Especial",
         meta_description: () => "O melhor tênis para corrida com amortecimento de ponta e design futurista.",
         
-        // Seleciona o primeiro fornecedor se a lista existir
         supplier_id: () => (suppliers && suppliers.length > 0) ? suppliers[0].id : '',
     };
 
@@ -70,6 +75,7 @@ export const clearFormData = (form: any) => {
 
     Object.keys(form.data()).forEach((key) => {
         const value = form[key];
+        // Adicionei 'state' e os contatos opcionais na lista de limpeza específica se desejar nulos
         if (['promo_price', 'promo_start_at', 'promo_end_at', 'supplier_id'].includes(key)) {
             form[key] = null;
         } 

@@ -86,6 +86,8 @@ const submit = () => {
                 </div>
             </div>
 
+            
+
             <form @submit.prevent="submit" class="space-y-6">
                 
                 <div v-show="activeTab === 'geral'" class="animate-in fade-in slide-in-from-bottom-2 duration-500">

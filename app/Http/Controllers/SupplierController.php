@@ -31,6 +31,8 @@ class SupplierController extends Controller
             'neighborhood'       => 'required|string|max:100',
             'city'               => 'required|string|max:100',
             'zip_code'           => 'required|string|max:10',
+            'state'              => 'required|string|max:2',
+            'email'              => 'required|email|unique:suppliers,email',
             'contact_name_1'     => 'required|string|max:100',
             'phone_1'            => 'required|string|max:20',
             'contact_name_2'     => 'nullable|string|max:100',
@@ -71,6 +73,8 @@ class SupplierController extends Controller
             'neighborhood'       => 'required|string|max:100',
             'city'               => 'required|string|max:100',
             'zip_code'           => 'required|string|max:10',
+            'state'              => 'required|string|max:2',
+            'email'              => 'required|email|unique:suppliers,email,' . $supplier->id,
             'contact_name_1'     => 'required|string|max:100',
             'phone_1'            => 'required|string|max:20',
             'contact_name_2'     => 'nullable|string|max:100',
@@ -78,6 +82,7 @@ class SupplierController extends Controller
         ], [
             'company_name.required' => 'A Razão Social é obrigatória.',
             'cnpj.unique'           => 'Este CNPJ já pertence a outro fornecedor.',
+            'email.unique'          => 'Este email já está sendo usado por outro fornecedor.',
         ]);
 
         $supplier->update($data);

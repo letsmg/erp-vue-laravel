@@ -1,7 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm, Link } from '@inertiajs/vue3';
-import { Save, ArrowLeft, Building2, Phone, MapPin, Hash, Globe, User, XCircle, Map } from 'lucide-vue-next';
+import { 
+    Save, ArrowLeft, Building2, Phone, MapPin, 
+    Hash, Globe, User, XCircle, Mail, Map
+} from 'lucide-vue-next';
 import { onMounted, onUnmounted } from 'vue';
 import { fillFormData, clearFormData } from '@/lib/utils';
 
@@ -12,18 +15,23 @@ const form = useForm({
     address: '',
     neighborhood: '',
     city: '',
+    state: '', // Campo adicionado
     zip_code: '',
+    email: '', 
     contact_name_1: '',
     phone_1: '',
     contact_name_2: '',
     phone_2: '',
 });
 
-// Funções para os atalhos mágicos
+const states = [
+    'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 
+    'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+];
+
 const filler = () => fillFormData(form);
 const clearer = () => clearFormData(form);
 
-// Máscara de CNPJ (00.000.000/0000-00)
 const maskCNPJ = (e) => {
     let v = e.target.value.replace(/\D/g, '');
     v = v.replace(/^(\d{2})(\d)/, '$1.$2');
@@ -33,7 +41,6 @@ const maskCNPJ = (e) => {
     form.cnpj = v.substring(0, 18);
 };
 
-// Máscara de CEP (00000-000)
 const maskCEP = (e) => {
     let v = e.target.value.replace(/\D/g, '');
     v = v.replace(/^(\d{5})(\d)/, '$1-$2');
@@ -126,7 +133,7 @@ onUnmounted(() => {
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="md:col-span-2">
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Logradouro (Rua, Nº, Compl.)</label>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Logradouro</label>
                             <input v-model="form.address" type="text" :class="{'border-red-500 bg-red-50': form.errors.address}" class="w-full rounded-lg border-gray-200 focus:ring-indigo-500" required />
                         </div>
                         <div>
@@ -140,6 +147,16 @@ onUnmounted(() => {
                         <div>
                             <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Cidade</label>
                             <input v-model="form.city" type="text" :class="{'border-red-500 bg-red-50': form.errors.city}" class="w-full rounded-lg border-gray-200 focus:ring-indigo-500" required />
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Estado (UF)</label>
+                            <div class="relative flex items-center">
+                                <Map class="absolute left-3 w-4 h-4 text-gray-400" />
+                                <select v-model="form.state" :class="{'border-red-500 bg-red-50': form.errors.state}" class="w-full pl-10 rounded-lg border-gray-200 focus:ring-indigo-500 appearance-none bg-white" required>
+                                    <option value="" disabled>Selecione...</option>
+                                    <option v-for="uf in states" :key="uf" :value="uf">{{ uf }}</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -163,6 +180,13 @@ onUnmounted(() => {
                                 <div class="relative flex items-center">
                                     <Phone class="absolute left-3 w-4 h-4 text-gray-400" />
                                     <input v-model="form.phone_1" type="text" class="w-full pl-10 border-gray-200 rounded-lg text-sm" required />
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-500 mb-1">E-mail</label>
+                                <div class="relative flex items-center">
+                                    <Mail class="absolute left-3 w-4 h-4 text-gray-400" />
+                                    <input v-model="form.email" type="email" :class="{'border-red-500 bg-red-50': form.errors.email}" class="w-full pl-10 border-gray-200 rounded-lg text-sm" placeholder="exemplo@empresa.com" required />
                                 </div>
                             </div>
                         </div>

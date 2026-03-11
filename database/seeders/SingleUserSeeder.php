@@ -13,7 +13,7 @@ class SingleUserSeeder extends Seeder
             ['email' => '1@1.com'],
             [
                 'name' => 'Admin Zenite',
-                'password' => \Illuminate\Support\Facades\Hash::make('SenhaNovaSite*'),
+                'password' => \Illuminate\Support\Facades\Hash::make('[SenhaNova2026]'),
                 'access_level' => 1,
                 'is_active' => true,
             ]

@@ -139,4 +139,4 @@ ______________________________________
 
 
 
-<img src="https://raw.githubusercontent.com/letsmg/erp-vue-laravel/main/snake.svg" />
+<img src="https://raw.githubusercontent.com/letsmg/erp-vue-laravel/main/snake-dark.svg?palette=github-dark" />

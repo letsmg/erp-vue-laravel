@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /users/
+Disallow: /suppliers/
+Disallow: /products/
+Sitemap: https://seusite.com/sitemap.xml
